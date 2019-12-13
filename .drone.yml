@@ -1,0 +1,30 @@
+kind: pipeline
+type: kubernetes
+name: dummy
+
+steps:
+- name: dummy-step
+  image: alpine:latest
+  commands:
+    - echo "I did nothing!"
+---
+
+kind: pipeline
+type: kubernetes
+name: connect-e2e-tests
+
+steps:
+- name: init-workspace
+  image: alpine:latest
+  commands:
+    - cd /tmp
+    - wget https://github.com/containous/yaegi/releases/download/v0.7.1/yaegi_v0.7.1_linux_386.tar.gz
+    - tar xvzf yaegi_v0.7.1_linux_386.tar.gz yaegi
+    - mv yaegi /drone/src
+
+- name: run-e2e-tests
+  image: alpine:latest
+  commands:
+    - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
+    - eval $execEnv
+    - echo $APP_ENV
