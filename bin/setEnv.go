@@ -19,5 +19,9 @@ func main() {
 }
 
 func getEnvFromBranch(branch string) string {
+	if branch == "master" {
+		return "prod"
+	}
+
 	return "r" + strings.Split(branch, "-")[0]
 }

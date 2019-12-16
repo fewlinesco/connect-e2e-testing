@@ -1,16 +1,5 @@
 kind: pipeline
 type: kubernetes
-name: dummy
-
-steps:
-- name: dummy-step
-  image: alpine:latest
-  commands:
-    - echo "I did nothing!"
----
-
-kind: pipeline
-type: kubernetes
 name: connect-e2e-tests
 
 steps:
@@ -23,8 +12,8 @@ steps:
     - mv yaegi /drone/src
 
 - name: run-e2e-tests
-  image: alpine:latest
+  image: cypress/base:ubuntu16-12.13.1
   commands:
     - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
     - eval $execEnv
-    - echo $APP_ENV
+    - yarn cypress:run
