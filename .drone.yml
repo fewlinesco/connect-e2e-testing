@@ -25,6 +25,6 @@ steps:
 - name: run-e2e-tests
   image: alpine:latest
   commands:
-    - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
-    - eval $execEnv
+    # - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
+    # - eval $execEnv
     - echo $APP_ENV
