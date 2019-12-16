@@ -9,7 +9,11 @@ import (
 func main() {
 	args := os.Args[1:]
 	branch := args[0]
-	env := getEnvFromBranch(branch)
+	env := os.Getenv("APP_ENV")
+
+	if env == "" {
+		env = getEnvFromBranch(branch)
+	}
 
 	fmt.Printf("%s=%v\n", "APP_ENV", env)
 }
