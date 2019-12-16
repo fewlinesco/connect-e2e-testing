@@ -16,4 +16,8 @@ steps:
   commands:
     - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
     - eval $execEnv
-    - yarn cypress:run
+    - npm install
+    - $(npm bin)/cypress run
+  environment:
+    CYPRESS_CONNECT_DEMO_YOGA_URL: https://connect-demo-yoga-u.r536.connect.eu-west-3.k8s.fewlines.net
+    CYPRESS_MAILDEV_URL: http://review-maildev.review
