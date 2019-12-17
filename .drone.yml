@@ -13,7 +13,7 @@ steps:
 
 - name: wait-for-app-readiness
   image: fewlines/deployment-checker:latest
-  pull: if-not-exists
+  pull: always
   commands:
     - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
     - eval $execEnv
