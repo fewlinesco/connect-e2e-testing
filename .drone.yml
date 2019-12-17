@@ -14,9 +14,10 @@ steps:
 - name: wait-for-app-readiness
   image: fewlines/deployment-checker:latest
   commands:
-    - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
-    - eval $execEnv
-    - export ROLLOUT_ENVIRONMENT=$APP_ENV
+    - echo "coucou"
+    # - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
+    # - eval $execEnv
+    # - export ROLLOUT_ENVIRONMENT=$APP_ENV
   environment:
     ROLLOUT_NAMESPACE: review
 
