@@ -13,15 +13,12 @@ steps:
 
 - name: wait-for-app-readiness
   image: fewlines/deployment-checker:latest
-  pull: always
-  settings:
-    rolloutEnvironment: r536
-    rolloutNamespace: review
-    # - ls bin
-    # # - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
-    # # - eval $execEnv
-    # # - export ROLLOUT_ENVIRONMENT=$APP_ENV
-    # # - ./bin/entrypoint.sh wait-for-rollout
+  pull: if-not-exists
+  commands:
+    - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
+    - eval $execEnv
+    - export ROLLOUT_ENVIRONMENT=$APP_ENV
+    - /app/bin/entrypoint.sh wait-for-rollout
   environment:
     ROLLOUT_NAMESPACE: review
 
@@ -37,4 +34,4 @@ steps:
     CYPRESS_MAILDEV_URL: http://review-maildev.review
 
 image_pull_secrets:
-- dockerconfigjson
+- dockercred
