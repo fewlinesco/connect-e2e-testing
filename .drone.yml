@@ -3,34 +3,38 @@ type: kubernetes
 name: connect-e2e-tests
 
 steps:
-# - name: init-workspace
-#   image: alpine:latest
-#   commands:
-#     - cd /tmp
-#     - wget https://github.com/containous/yaegi/releases/download/v0.7.1/yaegi_v0.7.1_linux_386.tar.gz
-#     - tar xvzf yaegi_v0.7.1_linux_386.tar.gz yaegi
-#     - mv yaegi /drone/src
-
-- name: wait-for-app-readiness
-  image: fewlines/deployment-checker:latest
+- name: init-workspace
+  image: alpine:latest
   commands:
-    - echo "coucou"
-    # - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
-    # - eval $execEnv
-    # - export ROLLOUT_ENVIRONMENT=$APP_ENV
+    - cd /tmp
+    - wget https://github.com/containous/yaegi/releases/download/v0.7.1/yaegi_v0.7.1_linux_386.tar.gz
+    - tar xvzf yaegi_v0.7.1_linux_386.tar.gz yaegi
+    - mv yaegi /drone/src
   environment:
     ROLLOUT_NAMESPACE: review
+    dockerconfigjson:
+      from_secret: dockerconfigjson
+- name: wait-for-app-readiness
+  image: fewlines/deployment-checker
+  commands:
+    - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
+    - eval $execEnv
+    - export ROLLOUT_ENVIRONMENT=$APP_ENV
+  environment:
+    ROLLOUT_NAMESPACE: review
+    dockerconfigjson:
+      from_secret: dockerconfigjson
 
-# - name: run-e2e-tests
-#   image: cypress/base:ubuntu16-12.13.1
-#   commands:
-#     - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
-#     - eval $execEnv
-#     - npm install
-#     - export CYPRESS_CONNECT_DEMO_YOGA_URL="https://connect-demo-yoga-u.$${APP_ENV}.connect.eu-west-3.k8s.fewlines.net"
-#     - $(npm bin)/cypress run
-#   environment:
-#     CYPRESS_MAILDEV_URL: http://review-maildev.review
+- name: run-e2e-tests
+  image: cypress/base:ubuntu16-12.13.1
+  commands:
+    - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
+    - eval $execEnv
+    - npm install
+    - export CYPRESS_CONNECT_DEMO_YOGA_URL="https://connect-demo-yoga-u.$${APP_ENV}.connect.eu-west-3.k8s.fewlines.net"
+    - $(npm bin)/cypress run
+  environment:
+    CYPRESS_MAILDEV_URL: http://review-maildev.review
 
 image_pull_secrets:
 - dockerconfigjson
