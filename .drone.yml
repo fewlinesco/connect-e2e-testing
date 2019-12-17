@@ -12,7 +12,8 @@ steps:
     - mv yaegi /drone/src
 
 - name: wait-for-app-readiness
-  image: fewlines/deployment-checker
+  image: fewlines/deployment-checker:latest
+  pull: always
   commands:
     - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
     - eval $execEnv
