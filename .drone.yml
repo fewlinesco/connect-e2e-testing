@@ -15,7 +15,7 @@ steps:
   image: fewlines/deployment-checker:latest
   pull: always
   commands:
-    - ls
+    - ls bin
     # - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
     # - eval $execEnv
     # - export ROLLOUT_ENVIRONMENT=$APP_ENV
