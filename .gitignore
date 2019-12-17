@@ -5,3 +5,5 @@ videos/
 .env
 
 yaegi
+
+docker-secret.json

@@ -3,13 +3,13 @@ type: kubernetes
 name: connect-e2e-tests
 
 steps:
-- name: init-workspace
-  image: alpine:latest
-  commands:
-    - cd /tmp
-    - wget https://github.com/containous/yaegi/releases/download/v0.7.1/yaegi_v0.7.1_linux_386.tar.gz
-    - tar xvzf yaegi_v0.7.1_linux_386.tar.gz yaegi
-    - mv yaegi /drone/src
+# - name: init-workspace
+#   image: alpine:latest
+#   commands:
+#     - cd /tmp
+#     - wget https://github.com/containous/yaegi/releases/download/v0.7.1/yaegi_v0.7.1_linux_386.tar.gz
+#     - tar xvzf yaegi_v0.7.1_linux_386.tar.gz yaegi
+#     - mv yaegi /drone/src
 
 - name: wait-for-app-readiness
   image: fewlines/deployment-checker:latest
@@ -30,3 +30,6 @@ steps:
 #     - $(npm bin)/cypress run
 #   environment:
 #     CYPRESS_MAILDEV_URL: http://review-maildev.review
+
+image_pull_secrets:
+- dockerconfigjson
