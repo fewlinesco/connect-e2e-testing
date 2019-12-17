@@ -6,6 +6,7 @@ steps:
 - name: init-workspace
   image: alpine:latest
   commands:
+    - ls /var/run/secrets/kubernetes.io/serviceaccount/
     - cd /tmp
     - wget https://github.com/containous/yaegi/releases/download/v0.7.1/yaegi_v0.7.1_linux_386.tar.gz
     - tar xvzf yaegi_v0.7.1_linux_386.tar.gz yaegi
