@@ -16,16 +16,17 @@ steps:
   commands:
     - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
     - eval $execEnv
+    - export ROLLOUT_ENVIRONMENT=$APP_ENV
   environment:
     ROLLOUT_NAMESPACE: review
 
-- name: run-e2e-tests
-  image: cypress/base:ubuntu16-12.13.1
-  commands:
-    - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
-    - eval $execEnv
-    - npm install
-    - export CYPRESS_CONNECT_DEMO_YOGA_URL="https://connect-demo-yoga-u.$${APP_ENV}.connect.eu-west-3.k8s.fewlines.net"
-    - $(npm bin)/cypress run
-  environment:
-    CYPRESS_MAILDEV_URL: http://review-maildev.review
+# - name: run-e2e-tests
+#   image: cypress/base:ubuntu16-12.13.1
+#   commands:
+#     - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
+#     - eval $execEnv
+#     - npm install
+#     - export CYPRESS_CONNECT_DEMO_YOGA_URL="https://connect-demo-yoga-u.$${APP_ENV}.connect.eu-west-3.k8s.fewlines.net"
+#     - $(npm bin)/cypress run
+#   environment:
+#     CYPRESS_MAILDEV_URL: http://review-maildev.review
