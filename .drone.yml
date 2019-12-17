@@ -16,8 +16,8 @@ steps:
   commands:
     - execEnv=$(./yaegi bin/setEnv.go $DRONE_BRANCH)
     - eval $execEnv
-    - export ROLLOUT_ENVIRONMENT=r0000
-    - wait-for-rollout
+    - export ROLLOUT_ENVIRONMENT=$APP_ENV
+    - ./bin/entrypoint.sh wait-for-rollout
   environment:
     ROLLOUT_NAMESPACE: review
 
