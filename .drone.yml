@@ -22,9 +22,6 @@ steps:
     - /app/bin/entrypoint.sh wait-for-rollout
   environment:
     ROLLOUT_NAMESPACE: review
-  volumes:
-    - name: token
-      path: /var/run/secrets/kubernetes.io/serviceaccount
 
 - name: run-e2e-tests
   image: cypress/base:ubuntu16-12.13.1
@@ -39,8 +36,3 @@ steps:
 
 image_pull_secrets:
 - dockercred
-
-volumes:
-- name: token
-  host:
-    path: /var/run/secrets/kubernetes.io/serviceaccount
