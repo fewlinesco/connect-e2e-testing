@@ -33,6 +33,3 @@ steps:
     - $(npm bin)/cypress run
   environment:
     CYPRESS_MAILDEV_URL: http://review-maildev.review
-
-image_pull_secrets:
-- dockercred
