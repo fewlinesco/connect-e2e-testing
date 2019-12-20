@@ -33,3 +33,7 @@ steps:
     - $(npm bin)/cypress run
   environment:
     CYPRESS_MAILDEV_URL: http://review-maildev.review
+
+trigger:
+  event:
+  - custom
